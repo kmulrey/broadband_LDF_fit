@@ -6,10 +6,15 @@
 	objectVersion = 50;
 	objects = {
 
+/* Begin PBXFileReference section */
+		41E48CB32643283300ADF435 /* sim_helper.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = sim_helper.py; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
 /* Begin PBXGroup section */
 		41E48CAC2643281100ADF435 = {
 			isa = PBXGroup;
 			children = (
+				41E48CB32643283300ADF435 /* sim_helper.py */,
 			);
 			sourceTree = "<group>";
 		};
