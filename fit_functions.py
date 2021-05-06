@@ -68,3 +68,18 @@ def fit_geo(fluence,pos,Erad_gm):
     Rgeo_fit=result.params['Rgeo'].value
     sigma_fit=result.params['sigma'].value
     return Rgeo_fit,sigma_fit
+
+
+def return_gm(r,Egeo_prime,Rgeo,sigma,p):
+    r=np.abs(r)
+    fgeo=0
+    if Rgeo>=0:
+        N=returnNplus(Rgeo,sigma)
+    else:
+        N=returnNminus(Rgeo,sigma)
+
+    if Rgeo<0:
+        fgeo=(1/N)*(Egeo_prime)*np.exp(-1.0*np.power(((r-Rgeo)/(np.sqrt(2)*sigma)),p))
+    if Rgeo>=0:
+        fgeo=(1/N)*(Egeo_prime)*(np.exp(-1.0*np.power(((r-Rgeo)/(np.sqrt(2)*sigma)),p))+np.exp(-1.0*np.power(((r+Rgeo)/(np.sqrt(2)*sigma)),p)))
+    return fgeo
