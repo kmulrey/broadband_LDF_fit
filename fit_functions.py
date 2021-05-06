@@ -13,6 +13,7 @@ from lmfit import minimize, Parameters, report_fit
 from scipy import special
 import random
 import scipy.interpolate as interpolate
+import sim_helper as helper
 
 
 
@@ -26,7 +27,7 @@ def objective_v1(params, r, data,Egeo_prime,p):
 
 def fit_geo(fluence,pos,Erad_gm):
    
-    sorted_pos,flu_gm,flu_ce,sorted_pos_gm_use,sorted_pos_ce_use,flu_gm_use,flu_ce_use=return_sorted(fluence,pos)
+    sorted_pos,flu_gm,flu_ce,sorted_pos_gm_use,sorted_pos_ce_use,flu_gm_use,flu_ce_use=helper.return_sorted(fluence,pos)
 
     fit_params_geo = Parameters()
     fit_params_geo.add( 'Rgeo', value=160, min=-210,  max=1500)
