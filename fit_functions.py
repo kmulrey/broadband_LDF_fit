@@ -10,7 +10,6 @@ import matplotlib as mpl
 import matplotlib.cm as cm
 from scipy.optimize import curve_fit
 from lmfit import minimize, Parameters, report_fit
-import radiation_energy as radiation_energy
 from scipy import special
 import random
 import scipy.interpolate as interpolate
