@@ -50,6 +50,21 @@ def return_gm_fit(params,r,Egeo_prime,p):
     if Rgeo>=0:
         fgeo=(1/N)*(Egeo_prime)*(np.exp(-1.0*np.power(((r-Rgeo)/(np.sqrt(2)*sigma)),p))+np.exp(-1.0*np.power(((r+Rgeo)/(np.sqrt(2)*sigma)),p)))
     return fgeo
+    
+    
+def return_gm_gauss_sigmoid(r,A,r0,r02,sigma,p0,a_rel):
+    r=np.abs(r)
+    s=5
+    p=2*np.ones([len(r)])
+    
+    for i in np.arange(len(r)):
+        if r[i]<=r0:
+            p[i]=2
+        else:
+            p[i]=p0
+        
+    return A*((np.exp(-1*((r-r0)/sigma)**p))+(a_rel/(1+np.exp(s*(r/(r0-r02)))))) 
+
 
 def fit_geo(fluence,pos,Erad_gm):
    
