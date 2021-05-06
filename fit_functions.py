@@ -24,6 +24,32 @@ def objective_v1(params, r, data,Egeo_prime,p):
     resid_0 = (data - return_gm_fit(params,r,Egeo_prime,p))**2/sigma**2
 
     return resid_0.flatten()
+    
+def returnNminus(R,sigma):
+    return sigma*np.pi*np.sqrt(2)*(np.sqrt(np.pi)*R*special.erfc(-1*R/(np.sqrt(2)*sigma))+np.sqrt(2)*sigma*np.exp(-1*R**2/(2*sigma**2)))
+    
+def returnNplus(R,sigma):
+    return 2*np.pi*sigma*(np.sqrt(2*np.pi)*R*special.erf(R/(np.sqrt(2)*sigma))+2*sigma*np.exp(-1*R**2/(2*sigma**2))                     )
+    
+def returnNce(k,sigma):
+    return (2*np.pi/(k+1))*np.power(2,k)*np.power(2*k+2,-0.5*k)*np.power(sigma,k+2)*special.gamma(k/2+1)
+    
+def return_gm_fit(params,r,Egeo_prime,p):
+    r=np.abs(r)
+
+    Rgeo=params['Rgeo'].value
+    sigma=params['sigma'].value
+    #print(Rgeo,sigma)
+    if Rgeo>=0:
+        N=returnNplus(Rgeo,sigma)
+    else:
+        N=returnNminus(Rgeo,sigma)
+    fgeo=0
+    if Rgeo<0:
+        fgeo=(1/N)*(Egeo_prime)*np.exp(-1.0*np.power(((r-Rgeo)/(np.sqrt(2)*sigma)),p))
+    if Rgeo>=0:
+        fgeo=(1/N)*(Egeo_prime)*(np.exp(-1.0*np.power(((r-Rgeo)/(np.sqrt(2)*sigma)),p))+np.exp(-1.0*np.power(((r+Rgeo)/(np.sqrt(2)*sigma)),p)))
+    return fgeo
 
 def fit_geo(fluence,pos,Erad_gm):
    
