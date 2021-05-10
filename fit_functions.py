@@ -91,7 +91,7 @@ def fit_gm(fluence,pos,Erad_gm,fit_params_geo):
     
 def objective_gauss_sigmoid(params, r,data):
     resid_0 = 0.0*data[:]
-    error=0.1*np.max(data)
+    error=0.03*data+1e-4*np.max(data)
     sigma=error*np.ones([len(data)])
     resid_0 = (data - return_gm_gauss_sigmoid_fit(params,r))**2/sigma**2
 
