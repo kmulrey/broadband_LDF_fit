@@ -112,7 +112,8 @@ for i in np.arange(len(files)):
 
         event=np.append(event,e*event_no, axis=0)
 
-
+print(str(int(event[n])))
+print(str(en))
 
 
 A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit,chi2_fit=fit.do_fit(fluence_50_350[n],ant_pos[n])
