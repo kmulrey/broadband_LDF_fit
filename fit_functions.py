@@ -204,16 +204,16 @@ def do_fit(fluence_50_350,ant_pos):
     return A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit,chi2_fit
     
     
-def do_fit_iterations(fluence_50_350,ant_pos):
+def do_fit_iterations(fluence_50_350,ant_pos,cherenkov_r,dmax):
     
     r_plot=np.arange(-500,500,1)
     sorted_pos,flu_gm,flu_ce,sorted_pos_gm_use,sorted_pos_ce_use,flu_gm_use,flu_ce_use=helper.return_sorted(fluence_50_350,ant_pos)
     
     #######################################################################
  
-    r0=0.87340687*cherenkov_r[n]-10.28786452
-    r02_start=((dmax[n]/1e3)* -1.13634435e-05 +2.04579086e-02)*r0
-    a_rel_start=  (dmax[n]/1e3)*7.66051857e-05 +5.60848744e-01
+    r0=0.87340687*cherenkov_r-10.28786452
+    r02_start=((dmax/1e3)* -1.13634435e-05 +2.04579086e-02)*r0
+    a_rel_start=  (dmax/1e3)*7.66051857e-05 +5.60848744e-01
 
     fit_params_geo_sig = Parameters()
     fit_params_geo_sig.add( 'A', value=2., min=.01,  max=300.)

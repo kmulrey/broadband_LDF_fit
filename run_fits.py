@@ -117,7 +117,7 @@ print(event[m])
 print(str(en))
 
 
-A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit,chi2_fit=fit.do_fit_iterations(fluence_50_350[m],ant_pos[m])
+A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit,chi2_fit=fit.do_fit_iterations(fluence_50_350[m],ant_pos[m],cherenkov_r[m],dmax[m])
 
 info={'A_fit':A_fit,'sigma_fit':sigma_fit,'r0_fit':r0_fit,'r02_fit':r02_fit,'p0_fit':p0_fit,'a_rel_fit':a_rel_fit,'s_fit':s_fit,'chi2_fit':chi2_fit,'event':event[m],'energy':energy[m],'dmax':dmax[m],'alpha':alpha[m],'clip_ratio':clip_ratio[m],'cherenkov_angle':cherenkov_angle[m],'cherenkov_r':cherenkov_r[m],'Erad_gm_50_350':Erad_gm_50_350[m],'Erad_ce_50_350':Erad_ce_50_350[m]}
 
