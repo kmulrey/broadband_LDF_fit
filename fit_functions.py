@@ -89,17 +89,17 @@ def fit_gm(fluence,pos,Erad_gm,fit_params_geo):
 ###########################################################################################
     
     
-def objective_gauss_sigmoid(params, r, s,data):
+def objective_gauss_sigmoid(params, r,data):
     resid_0 = 0.0*data[:]
     error=0.1*np.max(data)
     sigma=error*np.ones([len(data)])
-    resid_0 = (data - return_gm_gauss_sigmoid_fit(params,r,s))**2/sigma**2
+    resid_0 = (data - return_gm_gauss_sigmoid_fit(params,r))**2/sigma**2
 
     return resid_0.flatten()
     
 
 
-def return_gm_gauss_sigmoid_fit(params,r,s):
+def return_gm_gauss_sigmoid_fit(params,r):
     r=np.abs(r)
     r0=params['r0'].value
     r02=params['r02'].value
@@ -107,7 +107,8 @@ def return_gm_gauss_sigmoid_fit(params,r,s):
     p0=params['p0'].value
     A=params['A'].value
     a_rel=params['a_rel'].value
-    
+    s=params['s'].value
+
     p=2*np.ones([len(r)])
         
     for i in np.arange(len(r)):
@@ -130,7 +131,7 @@ def return_gm_gauss_sigmoid(r,A,sigma,r0,r02,p0,a_rel,s):
         
         
         
-def fit_gm_gauss_sigmoid(fluence,pos,fit_params_geo,s):
+def fit_gm_gauss_sigmoid(fluence,pos,fit_params_geo):
    
     sorted_pos,flu_gm,flu_ce,sorted_pos_gm_use,sorted_pos_ce_use,flu_gm_use,flu_ce_use=helper.return_sorted(fluence,pos)
 
@@ -146,12 +147,13 @@ def fit_gm_gauss_sigmoid(fluence,pos,fit_params_geo,s):
     fit_geo_y=flu_gm_use#[sorted_pos_gm_use>0]
     #rad_use=Erad_gm
 
-    result = minimize(objective_gauss_sigmoid, fit_params_geo,s, args=(fit_geo_x, fit_geo_y))
+    result = minimize(objective_gauss_sigmoid, fit_params_geo, args=(fit_geo_x, fit_geo_y))
     A_fit=result.params['A'].value
     sigma_fit=result.params['sigma'].value
     r0_fit=result.params['r0'].value
     r02_fit=result.params['r02'].value
     p0_fit=result.params['p0'].value
     a_rel_fit=result.params['a_rel'].value
+    s_fit=result.params['s'].value
 
-    return A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit
+    return A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit
