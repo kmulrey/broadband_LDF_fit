@@ -67,7 +67,7 @@ def return_gm(r,Egeo_prime,Rgeo,sigma,p):
     
     
 
-def fit_geo(fluence,pos,Erad_gm,fit_params_geo):
+def fit_gm(fluence,pos,Erad_gm,fit_params_geo):
    
     sorted_pos,flu_gm,flu_ce,sorted_pos_gm_use,sorted_pos_ce_use,flu_gm_use,flu_ce_use=helper.return_sorted(fluence,pos)
 
@@ -85,48 +85,8 @@ def fit_geo(fluence,pos,Erad_gm,fit_params_geo):
     sigma_fit=result.params['sigma'].value
     return Rgeo_fit,sigma_fit
 
-
-
-
-
     
-    
-def return_gm_gauss_sigmoid(r,A,r0,r02,sigma,p0,a_rel):
-    r=np.abs(r)
-    s=5
-    p=2*np.ones([len(r)])
-    
-    for i in np.arange(len(r)):
-        if r[i]<=r0:
-            p[i]=2
-        else:
-            p[i]=p0
-        
-    return A*((np.exp(-1*((r-r0)/sigma)**p))+(a_rel/(1+np.exp(s*(r/(r0-r02))))))
-    
-    
-def return_gm_gauss_sigmoid_fit(params,r):
-    A=params['A'].value
-    r0=params['r0'].value
-    r02=params['r02'].value
-    sigma=params['sigma'].value
-    p0=params['p0'].value
-    a_rel=params['a_rel'].value
-
-    r=np.abs(r)
-    s=5
-    p=2*np.ones([len(r)])
-    
-    for i in np.arange(len(r)):
-        if r[i]<=r0:
-            p[i]=2
-        else:
-            p[i]=p0
-        
-    return A*((np.exp(-1*((r-r0)/sigma)**p))+(a_rel/(1+np.exp(s*(r/(r0-r02))))))
-    
-    
-    
+###########################################################################################
     
     
 def objective_gauss_sigmoid(params, r, data):
@@ -137,7 +97,62 @@ def objective_gauss_sigmoid(params, r, data):
 
     return resid_0.flatten()
     
-    
-    
 
 
+def return_gm_gauss_sigmoid_fit(params,r):
+    r=np.abs(r)
+    r0=params['r0'].value
+    r02=params['r0'].value
+    sigma=params['sigma'].value
+    p0=params['p0'].value
+    A=params['A'].value
+    a_rel=params['a_rel'].value
+    s=5
+        
+    if r0>=0:
+        p=2
+    else:
+        p=p0
+        
+    return A*((np.exp(-1*((r-r0)/sigma)**p))+(a_rel/(1+np.exp(s*(r/(r0-r02))))))
+
+
+def return_gm_gauss_sigmoid(r,A,sigma,r0,r02,p0,a_rel):
+    r=np.abs(r)
+    s=5
+        
+    if r0>=0:
+        p=2
+    else:
+        p=p0
+        
+    return A*((np.exp(-1*((r-r0)/sigma)**p))+(a_rel/(1+np.exp(s*(r/(r0-r02))))))
+        
+        
+        
+def fit_gm_gauss_sigmoid(fluence,pos):
+   
+    sorted_pos,flu_gm,flu_ce,sorted_pos_gm_use,sorted_pos_ce_use,flu_gm_use,flu_ce_use=helper.return_sorted(fluence,pos)
+
+    fit_params_geo = Parameters()
+    fit_params_geo.add( 'A', value=2, min=.1,  max=15)
+    fit_params_geo.add( 'sigma', value=90, min=10,  max=1500)
+    fit_params_geo.add( 'r0', value=90, min=10,  max=1500)
+    fit_params_geo.add( 'r02', value=90, min=10,  max=1500)
+    fit_params_geo.add( 'p0', value=2, min=1,  max=3)
+    fit_params_geo.add( 'a_rel', value=.6, min=.4,  max=1.5)
+     
+    fit_geo_x=sorted_pos_gm_use#[sorted_pos_gm_use>0]
+    fit_geo_y=flu_gm_use#[sorted_pos_gm_use>0]
+    s=5
+    #rad_use=Erad_gm
+
+    result = minimize(objective_gauss_sigmoid, fit_params_geo, args=(fit_geo_x, fit_geo_y))
+    A_fit=result.params['A'].value
+    sigma_fit=result.params['sigma'].value
+    r0_fit=result.params['r0'].value
+    r02_fit=result.params['r02'].value
+    p0_fit=result.params['p0'].value
+    a_rel_fit=result.params['a_rel'].value
+
+    return A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit
