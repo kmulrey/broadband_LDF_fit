@@ -278,7 +278,7 @@ def do_fit_iterations(fluence_50_350,ant_pos):
     fit_params_geo_sig.add( 'a_rel', value=a_rel_fit,vary=False)
 
     A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit= fit.fit_gm_gauss_sigmoid(fluence_50_350[n],ant_pos[n],fit_params_geo_sig)
-        chi2_fit=fit.get_chi2(fluence_50_350[n],ant_pos[n],A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit)
+    chi2_fit=fit.get_chi2(fluence_50_350[n],ant_pos[n],A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit)
 
     #######################################################################
     
