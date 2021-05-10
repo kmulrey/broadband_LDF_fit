@@ -26,7 +26,7 @@ parser = OptionParser()
 parser.add_option("-e", "--event", default = "0", help = "event  index")
 (options, args) = parser.parse_args()
 en = int(options.event)
-n=10*en
+m=10*en
 
 directory='/vol/astro3/lofar/sim/kmulrey/spectral_analysis/Srd_Data/'
 files=glob.glob(directory+'*.p')
@@ -111,18 +111,19 @@ for i in np.arange(len(files)):
         ant_pos=np.concatenate((ant_pos,ant), axis=0)
 
         event=np.append(event,e*event_no, axis=0)
-        
+    
+print(n)
 print(event[n])
 print(str(en))
 
 
-A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit,chi2_fit=fit.do_fit(fluence_50_350[n],ant_pos[n])
+A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit,chi2_fit=fit.do_fit(fluence_50_350[m],ant_pos[n=m])
 
-info={'A_fit':A_fit,'sigma_fit':sigma_fit,'r0_fit':r0_fit,'r02_fit':r02_fit,'p0_fit':p0_fit,'a_rel_fit':a_rel_fit,'s_fit':s_fit,'chi2_fit':chi2_fit,'event':event[n],'energy':energy[n],'dmax':dmax[n],'alpha':alpha[n],'clip_ratio':clip_ratio[n],'cherenkov_angle':cherenkov_angle[n],'cherenkov_r':cherenkov_r[n],'Erad_gm_50_350':Erad_gm_50_350[n],'Erad_ce_50_350':Erad_ce_50_350[n]}
+info={'A_fit':A_fit,'sigma_fit':sigma_fit,'r0_fit':r0_fit,'r02_fit':r02_fit,'p0_fit':p0_fit,'a_rel_fit':a_rel_fit,'s_fit':s_fit,'chi2_fit':chi2_fit,'event':event[m],'energy':energy[m],'dmax':dmax[m],'alpha':alpha[m],'clip_ratio':clip_ratio[m],'cherenkov_angle':cherenkov_angle[m],'cherenkov_r':cherenkov_r[m],'Erad_gm_50_350':Erad_gm_50_350[m],'Erad_ce_50_350':Erad_ce_50_350[m]}
 
 
 
-outfilename='/vol/astro7/lofar/kmulrey/energy_reco/fit_results_v1/'+str(int(event[n]))+'_'+str(en)+'.p'
+outfilename='/vol/astro7/lofar/kmulrey/energy_reco/fit_results_v1/'+str(int(event[m]))+'_'+str(en)+'.p'
 outfile=open(outfilename,'wb')
 pickle.dump(info,outfile)
 outfile.close()
