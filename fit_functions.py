@@ -195,10 +195,10 @@ def do_fit(fluence_50_350,ant_pos):
     #fit_params_geo_sig.add( 's', value=4.5,min=0, max=6.)
     fit_params_geo_sig.add( 's', value=2.0,vary=False)
 
-    A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit= fit.fit_gm_gauss_sigmoid(fluence_50_350[n],ant_pos[n],fit_params_geo_sig)
+    A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit= fit_gm_gauss_sigmoid(fluence_50_350[n],ant_pos[n],fit_params_geo_sig)
 
-    f_geo_sig=fit.return_gm_gauss_sigmoid(r_plot,A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit)
-    chi2_fit=fit.get_chi2(fluence_50_350,ant_pos,A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit)
+    f_geo_sig=return_gm_gauss_sigmoid(r_plot,A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit)
+    chi2_fit=get_chi2(fluence_50_350,ant_pos,A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit)
         
        
     return A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit,chi2_fit
