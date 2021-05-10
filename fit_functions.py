@@ -159,3 +159,16 @@ def fit_gm_gauss_sigmoid(fluence,pos,fit_params_geo):
     s_fit=result.params['s'].value
 
     return A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit
+
+
+
+
+def get_chi2(r,A,sigma,r0,r02,p0,a_rel,s,data):
+    resid_0 = 0.0*data[:]
+    error=0.1*np.max(data)
+    sigma=error*np.ones([len(data)])
+    resid_0 = (data - return_gm_gauss_sigmoid(r,A,sigma,r0,r02,p0,a_rel,s))**2/sigma**2
+
+    return resid_0.flatten()
+
+    
