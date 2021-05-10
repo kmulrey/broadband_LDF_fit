@@ -89,7 +89,7 @@ def fit_gm(fluence,pos,Erad_gm,fit_params_geo):
 ###########################################################################################
     
     
-def objective_gauss_sigmoid(params, r, data,s):
+def objective_gauss_sigmoid(params, r, s,data):
     resid_0 = 0.0*data[:]
     error=0.1*np.max(data)
     sigma=error*np.ones([len(data)])
@@ -146,7 +146,7 @@ def fit_gm_gauss_sigmoid(fluence,pos,fit_params_geo,s):
     fit_geo_y=flu_gm_use#[sorted_pos_gm_use>0]
     #rad_use=Erad_gm
 
-    result = minimize(objective_gauss_sigmoid, fit_params_geo, args=(fit_geo_x, fit_geo_y),s)
+    result = minimize(objective_gauss_sigmoid, fit_params_geo,s, args=(fit_geo_x, fit_geo_y))
     A_fit=result.params['A'].value
     sigma_fit=result.params['sigma'].value
     r0_fit=result.params['r0'].value
