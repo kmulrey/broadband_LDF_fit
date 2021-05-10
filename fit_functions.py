@@ -102,7 +102,7 @@ def objective_gauss_sigmoid(params, r, data):
 def return_gm_gauss_sigmoid_fit(params,r):
     r=np.abs(r)
     r0=params['r0'].value
-    r02=params['r0'].value
+    r02=params['r02'].value
     sigma=params['sigma'].value
     p0=params['p0'].value
     A=params['A'].value
