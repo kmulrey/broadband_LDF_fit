@@ -168,7 +168,7 @@ def get_chi2(fluence, pos,A,sigma,r0,r02,p0,a_rel,s):
     sorted_pos,flu_gm,flu_ce,sorted_pos_gm_use,sorted_pos_ce_use,flu_gm_use,flu_ce_use=helper.return_sorted(fluence,pos)
     
     resid_0 = 0.0*flu_gm_use[:]
-    error=0.05*data+0.05*np.max(data)
+    error=0.05*fluence+0.05*np.max(fluence)
     sigma=error*np.ones([len(flu_gm_use)])
     resid_0 = (flu_gm_use - return_gm_gauss_sigmoid(sorted_pos_gm_use,A,sigma,r0,r02,p0,a_rel,s))**2/sigma**2
 
