@@ -130,17 +130,17 @@ def return_gm_gauss_sigmoid(r,A,sigma,r0,r02,p0,a_rel):
         
         
         
-def fit_gm_gauss_sigmoid(fluence,pos):
+def fit_gm_gauss_sigmoid(fluence,pos,fit_params_geo):
    
     sorted_pos,flu_gm,flu_ce,sorted_pos_gm_use,sorted_pos_ce_use,flu_gm_use,flu_ce_use=helper.return_sorted(fluence,pos)
 
-    fit_params_geo = Parameters()
-    fit_params_geo.add( 'A', value=2, min=.1,  max=15)
-    fit_params_geo.add( 'sigma', value=90, min=10,  max=1500)
-    fit_params_geo.add( 'r0', value=90, min=10,  max=1500)
-    fit_params_geo.add( 'r02', value=90, min=10,  max=1500)
-    fit_params_geo.add( 'p0', value=2, min=1,  max=3)
-    fit_params_geo.add( 'a_rel', value=.6, min=.4,  max=1.5)
+    #fit_params_geo = Parameters()
+    #fit_params_geo.add( 'A', value=2, min=.1,  max=15)
+    #fit_params_geo.add( 'sigma', value=90, min=10,  max=1500)
+    #fit_params_geo.add( 'r0', value=90, min=10,  max=1500)
+    #fit_params_geo.add( 'r02', value=90, min=10,  max=1500)
+    #fit_params_geo.add( 'p0', value=2, min=1,  max=3)
+    #fit_params_geo.add( 'a_rel', value=.6, min=.4,  max=1.5)
      
     fit_geo_x=sorted_pos_gm_use#[sorted_pos_gm_use>0]
     fit_geo_y=flu_gm_use#[sorted_pos_gm_use>0]
