@@ -112,7 +112,8 @@ for i in np.arange(len(files)):
 
         event=np.append(event,e*event_no, axis=0)
         print(event_no)
-print(str(int(event[n])))
+        
+print(event[n])
 print(str(en))
 
 
