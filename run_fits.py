@@ -25,8 +25,8 @@ from optparse import OptionParser
 parser = OptionParser()
 parser.add_option("-e", "--event", default = "0", help = "event  index")
 (options, args) = parser.parse_args()
-n = int(options.event)
-
+e = int(options.event)
+n=10*e
 
 directory='/vol/astro3/lofar/sim/kmulrey/spectral_analysis/Srd_Data/'
 files=glob.glob(directory+'*.p')
@@ -116,3 +116,12 @@ for i in np.arange(len(files)):
 
 
 A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit,chi2_fit=fit.do_fit(fluence_50_350[n],ant_pos[n])
+
+info={'A_fit':A_fit,'sigma_fit':sigma_fit,'r0_fit':r0_fit,'r02_fit':r02_fit,'p0_fit':p0_fit,'a_rel_fit':a_rel_fit,'s_fit':s_fit,'chi2_fit':chi2_fit,'event'=event[n],'energy':energy[n],'dmax':dmax[n],'alpha':alpha,'clip_ratio':clip_ratio,'cherenkov_angle':cherenkov_angle,'cherenkov_r':cherenkov_r,'Erad_gm_50_350':Erad_gm_50_350,'Erad_ce_50_350':Erad_ce_50_350}
+
+
+outfilename='/vol/astro7/lofar/kmulrey/energy_reco/fit_results_v1/'+str(event[n])+'.p'
+outfile=open(outfilename,'wb')
+pickle.dump(info,outfile)
+outfile.close()
+
