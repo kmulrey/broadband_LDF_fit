@@ -67,7 +67,7 @@ def return_gm(r,Egeo_prime,Rgeo,sigma,p):
     
     
 
-def fit_geo(fluence,pos,Erad_gm):
+def fit_geo(fluence,pos,Erad_gm,fit_params_geo):
    
     sorted_pos,flu_gm,flu_ce,sorted_pos_gm_use,sorted_pos_ce_use,flu_gm_use,flu_ce_use=helper.return_sorted(fluence,pos)
 
