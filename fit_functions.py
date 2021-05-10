@@ -17,7 +17,7 @@ import sim_helper as helper
 
 
 
-def objective_v1(params, r, data,Egeo_prime,p):
+def objective_gm(params, r, data,Egeo_prime,p):
     resid_0 = 0.0*data[:]
     error=0.1*np.max(data)
     sigma=error*np.ones([len(data)])
@@ -50,6 +50,45 @@ def return_gm_fit(params,r,Egeo_prime,p):
     if Rgeo>=0:
         fgeo=(1/N)*(Egeo_prime)*(np.exp(-1.0*np.power(((r-Rgeo)/(np.sqrt(2)*sigma)),p))+np.exp(-1.0*np.power(((r+Rgeo)/(np.sqrt(2)*sigma)),p)))
     return fgeo
+    
+def return_gm(r,Egeo_prime,Rgeo,sigma,p):
+    r=np.abs(r)
+    fgeo=0
+    if Rgeo>=0:
+        N=returnNplus(Rgeo,sigma)
+    else:
+        N=returnNminus(Rgeo,sigma)
+
+    if Rgeo<0:
+        fgeo=(1/N)*(Egeo_prime)*np.exp(-1.0*np.power(((r-Rgeo)/(np.sqrt(2)*sigma)),p))
+    if Rgeo>=0:
+        fgeo=(1/N)*(Egeo_prime)*(np.exp(-1.0*np.power(((r-Rgeo)/(np.sqrt(2)*sigma)),p))+np.exp(-1.0*np.power(((r+Rgeo)/(np.sqrt(2)*sigma)),p)))
+    return fgeo
+    
+    
+
+def fit_geo(fluence,pos,Erad_gm):
+   
+    sorted_pos,flu_gm,flu_ce,sorted_pos_gm_use,sorted_pos_ce_use,flu_gm_use,flu_ce_use=helper.return_sorted(fluence,pos)
+
+    #fit_params_geo = Parameters()
+    #fit_params_geo.add( 'Rgeo', value=160, min=-210,  max=1500)
+    #fit_params_geo.add( 'sigma', value=90, min=10,  max=1500)
+
+    fit_geo_x=sorted_pos_gm_use#[sorted_pos_gm_use>0]
+    fit_geo_y=flu_gm_use#[sorted_pos_gm_use>0]
+
+    rad_use=Erad_gm
+
+    result = minimize(objective_gm, fit_params_geo, args=(fit_geo_x, fit_geo_y,rad_use,2))
+    Rgeo_fit=result.params['Rgeo'].value
+    sigma_fit=result.params['sigma'].value
+    return Rgeo_fit,sigma_fit
+
+
+
+
+
     
     
 def return_gm_gauss_sigmoid(r,A,r0,r02,sigma,p0,a_rel):
@@ -90,43 +129,15 @@ def return_gm_gauss_sigmoid_fit(params,r):
     
     
     
+def objective_gauss_sigmoid(params, r, data):
+    resid_0 = 0.0*data[:]
+    error=0.1*np.max(data)
+    sigma=error*np.ones([len(data)])
+    resid_0 = (data - return_gm_gauss_sigmoid_fit(params,r))**2/sigma**2
+
+    return resid_0.flatten()
     
     
     
-    
-
-
-def fit_geo(fluence,pos,Erad_gm):
-   
-    sorted_pos,flu_gm,flu_ce,sorted_pos_gm_use,sorted_pos_ce_use,flu_gm_use,flu_ce_use=helper.return_sorted(fluence,pos)
-
-    fit_params_geo = Parameters()
-    fit_params_geo.add( 'Rgeo', value=160, min=-210,  max=1500)
-    fit_params_geo.add( 'sigma', value=90, min=10,  max=1500)
-
-    fit_geo_x=sorted_pos_gm_use#[sorted_pos_gm_use>0]
-    fit_geo_y=flu_gm_use#[sorted_pos_gm_use>0]
-
-    rad_use=Erad_gm
-
-    result = minimize(objective_v1, fit_params_geo, args=(fit_geo_x, fit_geo_y,rad_use,2))
-    Rgeo_fit=result.params['Rgeo'].value
-    sigma_fit=result.params['sigma'].value
-    return Rgeo_fit,sigma_fit
-
-
-def return_gm(r,Egeo_prime,Rgeo,sigma,p):
-    r=np.abs(r)
-    fgeo=0
-    if Rgeo>=0:
-        N=returnNplus(Rgeo,sigma)
-    else:
-        N=returnNminus(Rgeo,sigma)
-
-    if Rgeo<0:
-        fgeo=(1/N)*(Egeo_prime)*np.exp(-1.0*np.power(((r-Rgeo)/(np.sqrt(2)*sigma)),p))
-    if Rgeo>=0:
-        fgeo=(1/N)*(Egeo_prime)*(np.exp(-1.0*np.power(((r-Rgeo)/(np.sqrt(2)*sigma)),p))+np.exp(-1.0*np.power(((r+Rgeo)/(np.sqrt(2)*sigma)),p)))
-    return fgeo
 
 
