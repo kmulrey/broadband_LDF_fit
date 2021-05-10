@@ -202,5 +202,101 @@ def do_fit(fluence_50_350,ant_pos):
         
        
     return A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit,chi2_fit
+    
+    
+def do_fit_iterations(fluence_50_350,ant_pos):
+    
+    r_plot=np.arange(-500,500,1)
+    sorted_pos,flu_gm,flu_ce,sorted_pos_gm_use,sorted_pos_ce_use,flu_gm_use,flu_ce_use=helper.return_sorted(fluence_50_350,ant_pos)
+    
+    #######################################################################
+ 
+    r0=0.87340687*cherenkov_r[n]-10.28786452
+    r02_start=((dmax[n]/1e3)* -1.13634435e-05 +2.04579086e-02)*r0
+    a_rel_start=  (dmax[n]/1e3)*7.66051857e-05 +5.60848744e-01
+
+    fit_params_geo_sig = Parameters()
+    fit_params_geo_sig.add( 'A', value=2., min=.01,  max=300.)
+    fit_params_geo_sig.add( 'sigma', value=90., min=10.,  max=1500.)
+    fit_params_geo_sig.add( 'r0', value=r0,vary=False)
+    fit_params_geo_sig.add( 'r02', value=r02_start,vary=False)
+    fit_params_geo_sig.add( 'p0', value=0., vary=False)
+    fit_params_geo_sig.add( 'a_rel', value=a_rel_start, vary=False)
+
+    fit_params_geo_sig.add( 's', value=2.,vary=False)
+
+    A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit= fit.fit_gm_gauss_sigmoid(fluence_50_350[n],ant_pos[n],fit_params_geo_sig)
+    chi=fit.get_chi2(fluence_50_350[n],ant_pos[n],A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit)
+
+    
+    
+    #######################################################################
+
+    
+    
+    fit_params_geo_sig = Parameters()
+    fit_params_geo_sig.add( 'A', value=2., min=.01,  max=300.)
+    fit_params_geo_sig.add( 'sigma', value=sigma_fit,vary=False)
+    fit_params_geo_sig.add( 'r0', value=r0,vary=False)
+    fit_params_geo_sig.add( 'r02', value=r02_start,vary=False)
+    fit_params_geo_sig.add( 'p0', value=2., min=0.,  max=700.)
+    fit_params_geo_sig.add( 'a_rel', value=a_rel_start, vary=False)
+
+    fit_params_geo_sig.add( 's', value=2.,vary=False)
+
+    A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit= fit.fit_gm_gauss_sigmoid(fluence_50_350[n],ant_pos[n],fit_params_geo_sig)
+    chi=fit.get_chi2(fluence_50_350[n],ant_pos[n],A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit)
+
+    
+    #######################################################################
+
+    
+    fit_params_geo_sig = Parameters()
+    fit_params_geo_sig.add( 'A', value=2., min=.01,  max=300.)
+    fit_params_geo_sig.add( 'sigma', value=sigma_fit,vary=False)
+    fit_params_geo_sig.add( 'r0', value=r0,vary=False)
+    fit_params_geo_sig.add( 'r02', value=r02_start,vary=False)
+    fit_params_geo_sig.add( 'p0', value=p0_fit,vary=False)
+    fit_params_geo_sig.add( 's', value=2.,vary=False)
+    fit_params_geo_sig.add( 'a_rel', value=0.5, min=0.00,  max=1.)
+
+    A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit= fit.fit_gm_gauss_sigmoid(fluence_50_350[n],ant_pos[n],fit_params_geo_sig)
+    chi=fit.get_chi2(fluence_50_350[n],ant_pos[n],A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit)
+
+    
+    
+    #######################################################################
+
+    
+    fit_params_geo_sig = Parameters()
+    fit_params_geo_sig.add( 'A', value=2., min=.01,  max=300.)
+    fit_params_geo_sig.add( 'sigma', value=sigma_fit,vary=False)
+    fit_params_geo_sig.add( 'r0', value=r0,vary=False)
+    fit_params_geo_sig.add( 'r02', value=r02_start, min=0.,  max=r0*0.04)
+    fit_params_geo_sig.add( 'p0', value=p0_fit,vary=False)
+    fit_params_geo_sig.add( 's', value=2.,vary=False)
+    fit_params_geo_sig.add( 'a_rel', value=a_rel_fit,vary=False)
+
+    A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit= fit.fit_gm_gauss_sigmoid(fluence_50_350[n],ant_pos[n],fit_params_geo_sig)
+        chi2_fit=fit.get_chi2(fluence_50_350[n],ant_pos[n],A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit)
+
+    #######################################################################
+    
+    fit_params_geo_sig = Parameters()
+    fit_params_geo_sig.add( 'A', value=2., min=.01,  max=300.)
+    fit_params_geo_sig.add( 'sigma', value=sigma_fit,min=0,max=600)
+    fit_params_geo_sig.add( 'r0', value=r0,vary=False)
+    fit_params_geo_sig.add( 'r02', value=r02_start,min=r02_start/2,max=r02_start*2)
+    fit_params_geo_sig.add( 'p0', value=p0_fit,min=0,max=1000.)
+    fit_params_geo_sig.add( 's', value=2.,vary=False)
+    fit_params_geo_sig.add( 'a_rel', value=a_rel_fit,min=0,max=3.)
+
+    A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit= fit.fit_gm_gauss_sigmoid(fluence_50_350[n],ant_pos[n],fit_params_geo_sig)
+    chi2_fit=fit.get_chi2(fluence_50_350[n],ant_pos[n],A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit)
+
+
+       
+    return A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit,chi2_fit
+
 
 
