@@ -163,14 +163,14 @@ def fit_gm_gauss_sigmoid(fluence,pos,fit_params_geo):
 
 
 
-def get_chi2(r,A,sigma,r0,r02,p0,a_rel,s,data):
+def get_chi2(fluence, position,A,sigma,r0,r02,p0,a_rel,s):
 
     sorted_pos,flu_gm,flu_ce,sorted_pos_gm_use,sorted_pos_ce_use,flu_gm_use,flu_ce_use=helper.return_sorted(fluence,pos)
     
-    resid_0 = 0.0*data[:]
-    error=0.1*np.max(data)
-    sigma=error*np.ones([len(data)])
-    resid_0 = (data - return_gm_gauss_sigmoid(r,A,sigma,r0,r02,p0,a_rel,s))**2/sigma**2
+    resid_0 = 0.0*flu_gm_use[:]
+    error=0.1*np.max(flu_gm_use)
+    sigma=error*np.ones([len(flu_gm_use)])
+    resid_0 = (flu_gm_use - return_gm_gauss_sigmoid(orted_pos_gm_use,A,sigma,r0,r02,p0,a_rel,s))**2/sigma**2
 
     return np.sum(resid_0.flatten())/(len(resid_0.flatten())-6)
 
