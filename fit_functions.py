@@ -175,3 +175,102 @@ def get_chi2(fluence, pos,A,sigma,r0,r02,p0,a_rel,s):
     return np.sum(resid_0.flatten())/(len(resid_0.flatten())-6)
 
     
+
+
+
+
+def do_fits(l):
+    events=random.sample(range(nSims), l)
+
+    events2=np.array([])
+
+    energy2=np.array([])
+    dmax2=np.array([])
+    alpha2=np.array([])
+    clip_ratio2=np.array([])
+    cherenkov_angle2=np.array([])
+    cherenkov_r2=np.array([])
+    Erad_gm_2=np.array([])
+    Erad_ce_2=np.array([])
+
+    
+    
+    A=np.array([])
+    sigma=np.array([])
+    r0=np.array([])
+    r02=np.array([])
+    p0=np.array([])
+    a_rel=np.array([])
+    s=np.array([])
+    chi2=np.array([])
+    event2=np.array([])
+
+    
+    
+    
+    
+    for n in np.arange(l):
+
+        sorted_pos,flu_gm,flu_ce,sorted_pos_gm_use,sorted_pos_ce_use,flu_gm_use,flu_ce_use=helper.return_sorted(fluence_50_350[n],ant_pos[n])
+        fit_params_geo_sig = Parameters()
+        fit_params_geo_sig.add( 'A', value=2., min=.01,  max=150.)
+        fit_params_geo_sig.add( 'sigma', value=90., min=10.,  max=1500.)
+        fit_params_geo_sig.add( 'r0', value=100., min=1.,  max=300.)
+
+        fit_params_geo_sig.add( 'r02', value=80., min=1.,  max=300.)
+        fit_params_geo_sig.add( 'p0', value=2., min=1.,  max=3.)
+
+        fit_params_geo_sig.add( 'a_rel', value=1.5, min=-0.1,  max=3.)
+        #fit_params_geo_sig.add( 's', value=4.5,min=0, max=6.)
+        fit_params_geo_sig.add( 's', value=2.0,vary=False)
+
+        A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit= fit.fit_gm_gauss_sigmoid(fluence_50_350[n],ant_pos[n],fit_params_geo_sig)
+
+        f_geo_sig=fit.return_gm_gauss_sigmoid(r_plot,A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit)
+        chi2_fit=fit.get_chi2(fluence_50_350[n],ant_pos[n],A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit)
+        
+        events2= np.append(events2,[events[n]], axis=0)
+
+        energy2 = np.append(energy2,[energy[n]], axis=0)
+        dmax2 = np.append(dmax2,[dmax[n]], axis=0)
+        alpha2 = np.append(alpha2,[alpha[n]], axis=0)
+        clip_ratio2 = np.append(clip_ratio2,[clip_ratio[n]], axis=0)
+        cherenkov_angle2 = np.append(cherenkov_angle2,[cherenkov_angle[n]], axis=0)
+        cherenkov_r2 = np.append(cherenkov_r2,[cherenkov_r[n]], axis=0)
+        A = np.append(A,[A_fit], axis=0)
+        sigma = np.append(sigma,[sigma_fit], axis=0)
+        r0 = np.append(r0,[r0_fit], axis=0)
+        r02 = np.append(r02,[r02_fit], axis=0)
+        p0 = np.append(p0,[p0_fit], axis=0)
+        a_rel = np.append(a_rel,[a_rel_fit], axis=0)
+        s = np.append(s,[s_fit], axis=0)
+        chi2 = np.append(chi2,[chi2_fit], axis=0)
+        Erad_gm_2=np.append(Erad_gm_2,[Erad_gm_50_350[n]], axis=0)
+        Erad_ce_2=np.append(Erad_ce_2,[Erad_ce_50_350[n]], axis=0)
+
+
+        '''
+        fig = plt.figure(figsize=(10,5))
+        ax1 = fig.add_subplot(1,2,1)
+        ax2 = fig.add_subplot(1,2,2)
+     
+        ax1.plot(sorted_pos,flu_gm,'.',color='grey')
+        ax1.plot(sorted_pos_gm_use,flu_gm_use,'.',color='black')
+        ax1.plot(r_plot,f_geo_sig,color='green')
+    
+        ax2.plot(sorted_pos,flu_gm,'.',color='grey')
+        ax2.plot(sorted_pos_gm_use,flu_gm_use,'.',color='black')
+        ax2.plot(r_plot,f_geo_sig,color='green')
+
+        ax2.set_yscale('log')
+
+        ax1.grid()
+        ax2.grid()
+
+        plt.show()
+        '''
+    return events2,energy2,Erad_gm_2,Erad_ce_2,dmax2,alpha2,clip_ratio2,cherenkov_angle2,cherenkov_r2,A,sigma,r0,r02,p0,a_rel,s,chi2
+
+
+
+
