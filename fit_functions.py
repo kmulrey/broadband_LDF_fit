@@ -108,11 +108,12 @@ def return_gm_gauss_sigmoid_fit(params,r):
     A=params['A'].value
     a_rel=params['a_rel'].value
     s=5
+    
+    p=2*np.ones([len(r)])
         
-    if r0>=0:
-        p=2
-    else:
-        p=p0
+    for i in np.arange(len(r)):
+        if r[i]>r0:
+            p[i]=p0
         
     return A*((np.exp(-1*((r-r0)/sigma)**p))+(a_rel/(1+np.exp(s*(r/(r0-r02))))))
 
@@ -120,11 +121,12 @@ def return_gm_gauss_sigmoid_fit(params,r):
 def return_gm_gauss_sigmoid(r,A,sigma,r0,r02,p0,a_rel):
     r=np.abs(r)
     s=5
+    p=2*np.ones([len(r)])
         
-    if r0>=0:
-        p=2
-    else:
-        p=p0
+    for i in np.arange(len(r)):
+        if r[i]>r0:
+            p[i]=p0
+ 
         
     return A*((np.exp(-1*((r-r0)/sigma)**p))+(a_rel/(1+np.exp(s*(r/(r0-r02))))))
         
