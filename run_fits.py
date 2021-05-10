@@ -117,7 +117,8 @@ for i in np.arange(len(files)):
 
 A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit,chi2_fit=fit.do_fit(fluence_50_350[n],ant_pos[n])
 
-info={'A_fit':A_fit,'sigma_fit':sigma_fit,'r0_fit':r0_fit,'r02_fit':r02_fit,'p0_fit':p0_fit,'a_rel_fit':a_rel_fit,'s_fit':s_fit,'chi2_fit':chi2_fit,'event'=event[n],'energy':energy[n],'dmax':dmax[n],'alpha':alpha,'clip_ratio':clip_ratio,'cherenkov_angle':cherenkov_angle,'cherenkov_r':cherenkov_r,'Erad_gm_50_350':Erad_gm_50_350,'Erad_ce_50_350':Erad_ce_50_350}
+info={'A_fit':A_fit,'sigma_fit':sigma_fit,'r0_fit':r0_fit,'r02_fit':r02_fit,'p0_fit':p0_fit,'a_rel_fit':a_rel_fit,'s_fit':s_fit,'chi2_fit':chi2_fit,'event':event[n],'energy':energy[n],'dmax':dmax[n],'alpha':alpha[n],'clip_ratio':clip_ratio[n],'cherenkov_angle':cherenkov_angle[n],'cherenkov_r':cherenkov_r[n],'Erad_gm_50_350':Erad_gm_50_350[n],'Erad_ce_50_350':Erad_ce_50_350[n]}
+
 
 
 outfilename='/vol/astro7/lofar/kmulrey/energy_reco/fit_results_v1/'+str(event[n])+'.p'
