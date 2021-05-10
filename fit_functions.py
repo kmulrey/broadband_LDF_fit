@@ -181,7 +181,7 @@ def get_chi2(fluence, pos,A,sigma,r0,r02,p0,a_rel,s):
 
 def do_fit(fluence_50_350,ant_pos):
     
-
+    r_plot=np.arange(-500,500,1)
     sorted_pos,flu_gm,flu_ce,sorted_pos_gm_use,sorted_pos_ce_use,flu_gm_use,flu_ce_use=helper.return_sorted(fluence_50_350,ant_pos)
     fit_params_geo_sig = Parameters()
     fit_params_geo_sig.add( 'A', value=2., min=.01,  max=150.)
