@@ -89,17 +89,17 @@ def fit_gm(fluence,pos,Erad_gm,fit_params_geo):
 ###########################################################################################
     
     
-def objective_gauss_sigmoid(params, r, data):
+def objective_gauss_sigmoid(params, r, data,s):
     resid_0 = 0.0*data[:]
     error=0.1*np.max(data)
     sigma=error*np.ones([len(data)])
-    resid_0 = (data - return_gm_gauss_sigmoid_fit(params,r))**2/sigma**2
+    resid_0 = (data - return_gm_gauss_sigmoid_fit(params,r,s))**2/sigma**2
 
     return resid_0.flatten()
     
 
 
-def return_gm_gauss_sigmoid_fit(params,r):
+def return_gm_gauss_sigmoid_fit(params,r,s):
     r=np.abs(r)
     r0=params['r0'].value
     r02=params['r02'].value
@@ -107,7 +107,6 @@ def return_gm_gauss_sigmoid_fit(params,r):
     p0=params['p0'].value
     A=params['A'].value
     a_rel=params['a_rel'].value
-    s=5
     
     p=2*np.ones([len(r)])
         
@@ -118,9 +117,8 @@ def return_gm_gauss_sigmoid_fit(params,r):
     return A*((np.exp(-1*((r-r0)/sigma)**p))+(a_rel/(1+np.exp(s*(r/(r0-r02))))))
 
 
-def return_gm_gauss_sigmoid(r,A,sigma,r0,r02,p0,a_rel):
+def return_gm_gauss_sigmoid(r,A,sigma,r0,r02,p0,a_rel,s):
     r=np.abs(r)
-    s=5
     p=2*np.ones([len(r)])
         
     for i in np.arange(len(r)):
@@ -132,7 +130,7 @@ def return_gm_gauss_sigmoid(r,A,sigma,r0,r02,p0,a_rel):
         
         
         
-def fit_gm_gauss_sigmoid(fluence,pos,fit_params_geo):
+def fit_gm_gauss_sigmoid(fluence,pos,fit_params_geo,s):
    
     sorted_pos,flu_gm,flu_ce,sorted_pos_gm_use,sorted_pos_ce_use,flu_gm_use,flu_ce_use=helper.return_sorted(fluence,pos)
 
@@ -146,10 +144,9 @@ def fit_gm_gauss_sigmoid(fluence,pos,fit_params_geo):
      
     fit_geo_x=sorted_pos_gm_use#[sorted_pos_gm_use>0]
     fit_geo_y=flu_gm_use#[sorted_pos_gm_use>0]
-    s=5
     #rad_use=Erad_gm
 
-    result = minimize(objective_gauss_sigmoid, fit_params_geo, args=(fit_geo_x, fit_geo_y))
+    result = minimize(objective_gauss_sigmoid, fit_params_geo, args=(fit_geo_x, fit_geo_y),s)
     A_fit=result.params['A'].value
     sigma_fit=result.params['sigma'].value
     r0_fit=result.params['r0'].value
