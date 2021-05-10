@@ -9,6 +9,7 @@
 /* Begin PBXFileReference section */
 		41E48CB32643283300ADF435 /* sim_helper.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = sim_helper.py; sourceTree = "<group>"; };
 		41E48CB42643E78B00ADF435 /* fit_functions.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = fit_functions.py; sourceTree = "<group>"; };
+		41E48CB52649BEF200ADF435 /* run_fits.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = run_fits.py; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -17,6 +18,7 @@
 			children = (
 				41E48CB32643283300ADF435 /* sim_helper.py */,
 				41E48CB42643E78B00ADF435 /* fit_functions.py */,
+				41E48CB52649BEF200ADF435 /* run_fits.py */,
 			);
 			sourceTree = "<group>";
 		};
