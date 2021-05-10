@@ -18,7 +18,14 @@ import sys
 import sim_helper as helper
 import fit_functions as fit
 import random
+from optparse import OptionParser
 
+
+
+parser = OptionParser()
+parser.add_option("-e", "--event", default = "0", help = "event  index")
+(options, args) = parser.parse_args()
+n = int(options.event)
 
 
 directory='/vol/astro3/lofar/sim/kmulrey/spectral_analysis/Srd_Data/'
@@ -105,3 +112,7 @@ for i in np.arange(len(files)):
 
         event=np.append(event,e*event_no, axis=0)
 
+
+
+
+A_fit,sigma_fit,r0_fit,r02_fit,p0_fit,a_rel_fit,s_fit,chi2_fit=fit.do_fit(fluence_50_350[n],ant_pos[n])
