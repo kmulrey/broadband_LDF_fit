@@ -209,7 +209,7 @@ def do_fits(l):
     
     
     
-    for n in np.arange(l):
+    for n in np.arange(l,nSims):
 
         sorted_pos,flu_gm,flu_ce,sorted_pos_gm_use,sorted_pos_ce_use,flu_gm_use,flu_ce_use=helper.return_sorted(fluence_50_350[n],ant_pos[n])
         fit_params_geo_sig = Parameters()
