@@ -26,7 +26,7 @@ parser = OptionParser()
 parser.add_option("-e", "--event", default = "0", help = "event  index")
 (options, args) = parser.parse_args()
 en = int(options.event)
-m=10*en
+m=10*en+1
 
 directory='/vol/astro3/lofar/sim/kmulrey/spectral_analysis/Srd_Data/'
 files=glob.glob(directory+'*.p')
