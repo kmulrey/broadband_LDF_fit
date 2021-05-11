@@ -112,9 +112,9 @@ def return_gm_gauss_sigmoid_fit(params,r):
     p=2*np.ones([len(r)])
         
     for i in np.arange(len(r)):
-        if r[i]>r0:
-            #p[i]=p0
-            p[i]=2*np.power((r0/r[i]),(p0/1e3))
+        if r[i]>=r0:
+            p[i]=p0
+            #p[i]=2*np.power((r0/r[i]),(p0/1e3))
 
     return A*((np.exp(-1*((r-r0)/sigma)**p))+(a_rel/(1+np.exp(s*(r/(r0-r02))))))
 
@@ -125,8 +125,8 @@ def return_gm_gauss_sigmoid(r,A,sigma,r0,r02,p0,a_rel,s):
         
     for i in np.arange(len(r)):
         if r[i]>=r0:
-            #p[i]=p0
-            p[i]=2*np.power((r0/r[i]),(p0/1e3))
+            p[i]=p0
+            #p[i]=2*np.power((r0/r[i]),(p0/1e3))
 
         
     return A*((np.exp(-1*((r-r0)/sigma)**p))+(a_rel/(1+np.exp(s*(r/(r0-r02))))))
@@ -239,7 +239,7 @@ def do_fit_iterations(fluence_50_350,ant_pos,cherenkov_r,dmax):
     fit_params_geo_sig.add( 'sigma', value=sigma_fit,vary=False)
     fit_params_geo_sig.add( 'r0', value=r0,vary=False)
     fit_params_geo_sig.add( 'r02', value=r02_start,vary=False)
-    fit_params_geo_sig.add( 'p0', value=2., min=0.,  max=700.)
+    fit_params_geo_sig.add( 'p0', value=2., min=0.,  max=5.)
     fit_params_geo_sig.add( 'a_rel', value=a_rel_start, vary=False)
 
     fit_params_geo_sig.add( 's', value=2.,vary=False)
@@ -287,7 +287,7 @@ def do_fit_iterations(fluence_50_350,ant_pos,cherenkov_r,dmax):
     fit_params_geo_sig.add( 'sigma', value=sigma_fit,min=0,max=600)
     fit_params_geo_sig.add( 'r0', value=r0,vary=False)
     fit_params_geo_sig.add( 'r02', value=r02_start,min=r02_start/2,max=r02_start*2)
-    fit_params_geo_sig.add( 'p0', value=p0_fit,min=0,max=1000.)
+    fit_params_geo_sig.add( 'p0', value=p0_fit,min=0,max=5.)
     fit_params_geo_sig.add( 's', value=2.,vary=False)
     fit_params_geo_sig.add( 'a_rel', value=a_rel_fit,min=0,max=3.)
 
