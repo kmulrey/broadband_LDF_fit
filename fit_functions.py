@@ -218,7 +218,7 @@ def do_fit_iterations(fluence_50_350,ant_pos,cherenkov_r,dmax):
     a_rel_start=  (dmax/1e3)*7.66051857e-05 +5.60848744e-01
 
     fit_params_geo_sig = Parameters()
-    fit_params_geo_sig.add( 'A', value=2., min=.01,  max=300.)
+    fit_params_geo_sig.add( 'A', value=2., min=.01,  max=1000.)
     fit_params_geo_sig.add( 'sigma', value=90., min=10.,  max=1500.)
     fit_params_geo_sig.add( 'r0', value=r0,vary=False)
     fit_params_geo_sig.add( 'r02', value=r02_start,vary=False)
@@ -238,7 +238,7 @@ def do_fit_iterations(fluence_50_350,ant_pos,cherenkov_r,dmax):
 
     
     fit_params_geo_sig = Parameters()
-    fit_params_geo_sig.add( 'A', value=2., min=.01,  max=300.)
+    fit_params_geo_sig.add( 'A', value=2., min=.01,  max=1000.)
     fit_params_geo_sig.add( 'sigma', value=sigma_fit,vary=False)
     fit_params_geo_sig.add( 'r0', value=r0,vary=False)
     fit_params_geo_sig.add( 'r02', value=r02_start,vary=False)
@@ -256,7 +256,7 @@ def do_fit_iterations(fluence_50_350,ant_pos,cherenkov_r,dmax):
     #vary a_rel, A
 
     fit_params_geo_sig = Parameters()
-    fit_params_geo_sig.add( 'A', value=2., min=.01,  max=300.)
+    fit_params_geo_sig.add( 'A', value=2., min=.01,  max=1000.)
     fit_params_geo_sig.add( 'sigma', value=sigma_fit,vary=False)
     fit_params_geo_sig.add( 'r0', value=r0,vary=False)
     fit_params_geo_sig.add( 'r02', value=r02_start,vary=False)
@@ -274,10 +274,10 @@ def do_fit_iterations(fluence_50_350,ant_pos,cherenkov_r,dmax):
     #vary r02, A
 
     fit_params_geo_sig = Parameters()
-    fit_params_geo_sig.add( 'A', value=2., min=.01,  max=300.)
+    fit_params_geo_sig.add( 'A', value=2., min=.01,  max=1000.)
     fit_params_geo_sig.add( 'sigma', value=sigma_fit,vary=False)
     fit_params_geo_sig.add( 'r0', value=r0,vary=False)
-    fit_params_geo_sig.add( 'r02', value=r02_start, min=0.,  max=r0*0.04)
+    fit_params_geo_sig.add( 'r02', value=r02_start, min=0.,  max=1000)
     fit_params_geo_sig.add( 'p0', value=p0_fit,vary=False)
     fit_params_geo_sig.add( 's', value=2.,vary=False)
     fit_params_geo_sig.add( 'a_rel', value=a_rel_fit,vary=False)
@@ -291,10 +291,10 @@ def do_fit_iterations(fluence_50_350,ant_pos,cherenkov_r,dmax):
 
     
     fit_params_geo_sig = Parameters()
-    fit_params_geo_sig.add( 'A', value=2., min=.01,  max=300.)
+    fit_params_geo_sig.add( 'A', value=2., min=.01,  max=1000.)
     fit_params_geo_sig.add( 'sigma', value=sigma_fit,min=0,max=600)
     fit_params_geo_sig.add( 'r0', value=r0,vary=False)
-    fit_params_geo_sig.add( 'r02', value=r02_start,min=r02_start/2,max=r02_start*2)
+    fit_params_geo_sig.add( 'r02', value=r02_start,min=0,max=1000)
     fit_params_geo_sig.add( 'p0', value=p0_fit,min=0,max=5.)
     fit_params_geo_sig.add( 's', value=2.,vary=False)
     fit_params_geo_sig.add( 'a_rel', value=a_rel_fit,min=0,max=3.)
