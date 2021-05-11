@@ -123,7 +123,7 @@ info={'A_fit':A_fit,'sigma_fit':sigma_fit,'r0_fit':r0_fit,'r02_fit':r02_fit,'p0_
 
 
 
-outfilename='/vol/astro7/lofar/kmulrey/energy_reco/fit_results_v2/'+str(int(event[m]))+'_'+str(en)+'.p'
+outfilename='/vol/astro7/lofar/kmulrey/energy_reco/fit_results_v3/'+str(int(event[m]))+'_'+str(en)+'.p'
 outfile=open(outfilename,'wb')
 pickle.dump(info,outfile)
 outfile.close()
